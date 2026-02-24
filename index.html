@@ -3,508 +3,1233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HVAC Revenue Leak Audit - Dhinova AI</title>
+    <title>HVAC Revenue Leak Audit — Dhinova AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --navy: #0f1f38;
+            --navy-mid: #1a3356;
+            --slate: #2e4a6e;
+            --steel: #4a6fa5;
+            --mist: #e8eef6;
+            --green: #2d7a5f;
+            --green-light: #e6f4ef;
+            --amber: #c47f2a;
+            --amber-light: #fdf3e3;
+            --white: #ffffff;
+            --offwhite: #f6f8fb;
+            --text: #1a2b42;
+            --text-muted: #6b7f99;
+            --border: #dce5f0;
+            --shadow-sm: 0 1px 4px rgba(15,31,56,0.06);
+            --shadow-md: 0 4px 20px rgba(15,31,56,0.10);
+            --shadow-lg: 0 12px 48px rgba(15,31,56,0.14);
         }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            background: #f8f9fa;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--offwhite);
+            color: var(--text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .container {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .tagline {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        /* Hero Section */
-        .hero {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 36px;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-        
-        .badge {
+
+        /* ── TOP BAR ── */
+        .topbar {
+            background: var(--navy);
+            color: rgba(255,255,255,0.75);
             font-size: 13px;
-            color: #27ae60;
-            font-weight: 500;
+            text-align: center;
+            padding: 10px 20px;
+            letter-spacing: 0.01em;
         }
-        
-        /* Content Sections */
-        .section {
-            background: white;
-            padding: 40px;
+        .topbar strong { color: #fff; }
+
+        /* ── NAV ── */
+        nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .nav-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--navy);
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        
-        h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        h3 {
-            font-size: 18px;
-            margin: 25px 0 15px 0;
-            color: #2c3e50;
-        }
-        
-        p {
-            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
             font-size: 16px;
+            color: white;
+        }
+        .nav-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.01em;
+        }
+        .nav-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+            display: block;
+            line-height: 1;
+            margin-top: 1px;
+        }
+        .nav-cta {
+            background: var(--navy);
+            color: white;
+            padding: 9px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .nav-cta:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+        /* ── LAYOUT ── */
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 72px 0 56px;
+            text-align: center;
+        }
+
+        .founding-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--amber-light);
+            border: 1px solid #e8c87a;
+            color: var(--amber);
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 28px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .founding-pill span { font-size: 14px; }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(32px, 5vw, 48px);
+            line-height: 1.15;
+            color: var(--navy);
+            letter-spacing: -0.02em;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        h1 em {
+            font-style: italic;
+            color: var(--steel);
+        }
+
+        .hero-sub {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto 36px;
+            font-weight: 400;
             line-height: 1.7;
         }
-        
-        ul {
-            margin: 20px 0;
-            padding-left: 0;
-            list-style: none;
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
         }
-        
-        li {
-            padding: 10px 0;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        
-        li:before {
-            content: "✓ ";
-            color: #27ae60;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        
-        /* Steps */
-        .steps {
-            margin: 25px 0;
-        }
-        
-        .step {
-            padding: 15px 0;
-            font-size: 16px;
-        }
-        
-        .step-number {
-            display: inline-block;
-            background: #3498db;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            margin-right: 12px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        /* Price Box */
-        .price-box {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 30px 0;
-            border: 2px solid #e9ecef;
-        }
-        
-        .price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin: 10px 0;
-        }
-        
-        .price-detail {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-bottom: 5px;
-        }
-        
-        .timeline {
-            display: inline-block;
-            background: #fff3cd;
-            color: #856404;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 15px;
-        }
-        
-        /* CTA Buttons */
-        .cta-container {
-            text-align: center;
-            margin: 35px 0;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            font-size: 18px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            margin: 10px;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background: #e74c3c;
-            color: white;
-            border: none;
-        }
-        
-        .btn-primary:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-        }
-        
-        .btn-secondary {
-            background: white;
-            color: #3498db;
-            border: 2px solid #3498db;
-        }
-        
-        .btn-secondary:hover {
-            background: #3498db;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .btn-text {
-            display: block;
+        .hero-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             font-size: 13px;
-            font-weight: 400;
-            margin-top: 8px;
-            opacity: 0.8;
-        }
-        
-        /* FAQ */
-        .faq-item {
-            margin-bottom: 25px;
-        }
-        
-        .faq-question {
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-        
-        .faq-answer {
-            font-size: 15px;
-            color: #555;
-            line-height: 1.6;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 20px 20px;
-        }
-        
-        .contact {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        
-        .contact h3 {
-            margin-top: 0;
-        }
-        
-        .email-link {
-            color: #3498db;
-            text-decoration: none;
-            font-size: 18px;
+            color: var(--green);
             font-weight: 500;
         }
-        
-        .email-link:hover {
-            text-decoration: underline;
+        .hero-badge::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background: var(--green);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-size: 10px;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0;
         }
-        
-        .footer-text {
+
+        /* ── STAT ROW ── */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 56px;
+        }
+        .stat-cell {
+            background: var(--white);
+            padding: 24px 20px;
+            text-align: center;
+        }
+        .stat-number {
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            color: var(--navy);
+            display: block;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        /* ── SECTION HEADER ── */
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--steel);
+            margin-bottom: 10px;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 36px 40px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        .card-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 18px;
+            letter-spacing: -0.02em;
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 15.5px;
+            margin-bottom: 20px;
+        }
+        .card p:last-child { margin-bottom: 0; }
+
+        /* ── DELIVERABLES ── */
+        .deliverables {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 24px;
+        }
+        .deliverable {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+        .deliverable:hover { background: var(--offwhite); }
+        .deliverable-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--mist);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .deliverable-text strong {
+            display: block;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+        .deliverable-text span {
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        .highlight-box {
+            background: var(--green-light);
+            border: 1px solid #b5d9cc;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 24px;
+            font-size: 14.5px;
+            color: var(--green);
+            font-weight: 500;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 24px;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 18px 0;
+            position: relative;
+        }
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 52px;
+            width: 2px;
+            height: calc(100% - 36px);
+            background: var(--border);
+        }
+        .step-num {
+            width: 36px;
+            height: 36px;
+            background: var(--navy);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .step-content strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 3px;
+            padding-top: 6px;
+        }
+        .step-content span {
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        /* ── VIDEO SECTION ── */
+        .video-section {
+            margin-bottom: 20px;
+        }
+        .video-card {
+            background: var(--navy);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .video-inner {
+            padding: 52px 40px;
+            text-align: center;
+            position: relative;
+        }
+        .video-bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .video-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+        }
+        .video-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            color: white;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+        .video-subtitle {
             font-size: 14px;
-            color: #7f8c8d;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        /* Play button placeholder */
+        .play-placeholder {
+            width: 72px;
+            height: 72px;
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            position: relative;
+        }
+        .play-placeholder:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+        .play-placeholder svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+            margin-left: 3px;
+        }
+
+        .video-coming {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            position: relative;
+        }
+        .video-coming-dot {
+            width: 7px;
+            height: 7px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ── LOOM EMBED TARGET ── (swap in later) */
+        /*
+        .loom-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+        .loom-embed iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        */
+
+        /* ── PRICING ── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 28px 0;
+        }
+        .pricing-option {
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px;
+            background: var(--white);
+            position: relative;
+        }
+        .pricing-option.featured {
+            border-color: var(--navy);
+            background: var(--navy);
+            color: white;
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--steel);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 100px;
+            white-space: nowrap;
+            letter-spacing: 0.04em;
+        }
+        .pricing-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .pricing-option.featured .pricing-label { color: rgba(255,255,255,0.55); }
+
+        .pricing-price {
+            font-family: 'DM Serif Display', serif;
+            font-size: 40px;
+            color: var(--navy);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .pricing-option.featured .pricing-price { color: white; }
+
+        .pricing-note {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .pricing-option.featured .pricing-note { color: rgba(255,255,255,0.5); }
+
+        .pricing-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .pricing-items li {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 8px;
+        }
+        .pricing-option.featured .pricing-items li { color: rgba(255,255,255,0.65); }
+        .pricing-items li::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .pricing-option.featured .pricing-items li::before { color: #4ade80; }
+
+        .delivery-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--mist);
+            color: var(--slate);
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 6px;
+            margin-bottom: 28px;
+        }
+
+        /* ── BUTTONS ── */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 15.5px;
+            font-weight: 600;
+            padding: 15px 28px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--navy-mid);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(15,31,56,0.25);
+        }
+        .btn-secondary {
+            background: var(--white);
+            color: var(--navy);
+            border: 1.5px solid var(--border);
+        }
+        .btn-secondary:hover {
+            border-color: var(--steel);
+            color: var(--steel);
+            transform: translateY(-1px);
+        }
+        .btn-sub {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 4px;
+            opacity: 0.65;
+        }
+
+        /* ── FOUNDER CARD ── */
+        .founder-card {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+        .founder-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--mist);
+            border: 2px solid var(--border);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            color: var(--slate);
+        }
+        .founder-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+        .founder-role {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .founder-bio {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+        .mini-cases {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
         }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-            
-            .hero, .section {
-                padding: 30px 20px;
-            }
-            
-            h1 {
-                font-size: 28px;
-            }
-            
-            h2 {
-                font-size: 22px;
-            }
-            
-            .trust-badges {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .btn {
-                display: block;
-                margin: 10px 0;
-                width: 100%;
-            }
-            
-            .price {
-                font-size: 38px;
-            }
+        .mini-case {
+            display: flex;
+            gap: 10px;
+            font-size: 13.5px;
         }
-        
-        /* Highlight Box */
-        .highlight {
-            background: #e8f5e9;
-            border-left: 4px solid #27ae60;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 4px;
+        .mini-case-icon {
+            font-size: 15px;
+            flex-shrink: 0;
         }
-        
-        .highlight p {
-            margin: 0;
-            color: #2c3e50;
+        .mini-case-text {
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .mini-case-text strong {
+            color: var(--navy);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+        .social-link:hover {
+            border-color: var(--steel);
+            color: var(--steel);
+        }
+
+        /* ── FAQ ── */
+        .faq-list {
+            margin-top: 8px;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .faq-item:first-child { border-top: 1px solid var(--border); }
+
+        .faq-trigger {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 18px 4px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--navy);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            transition: color 0.15s;
+        }
+        .faq-trigger:hover { color: var(--steel); }
+        .faq-icon {
+            width: 22px;
+            height: 22px;
+            border: 1.5px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.25s, border-color 0.15s, background 0.15s;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            background: var(--navy);
+            border-color: var(--navy);
+            color: white;
+        }
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.open .faq-body {
+            max-height: 200px;
+            padding-bottom: 18px;
+        }
+        .faq-body p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            padding: 0 28px 0 4px;
+        }
+
+        /* ── CONTACT FOOTER ── */
+        .contact-section {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 36px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .contact-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+        .contact-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        .email-link {
+            color: var(--steel);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .email-link:hover { text-decoration: underline; }
+
+        .footer-copy {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            padding-bottom: 20px;
+        }
+
+        /* ── SECTION SPACING ── */
+        .section-gap { margin-top: 56px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            nav { padding: 0 16px; }
+            .page { padding: 0 16px 60px; }
+            .hero { padding: 48px 0 40px; }
+            .card { padding: 28px 24px; }
+            .pricing-grid { grid-template-columns: 1fr; margin-top: 32px; }
+            .founder-card { flex-direction: column; gap: 16px; }
+            .contact-section { grid-template-columns: 1fr; gap: 20px; }
+            .stat-row { grid-template-columns: 1fr; }
+            .stat-cell { border-bottom: 1px solid var(--border); }
+            .stat-cell:last-child { border-bottom: none; }
+            .hero-badges { gap: 14px; flex-direction: column; align-items: center; }
+            .social-links { flex-wrap: wrap; }
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .reveal.hidden {
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">Dhinova AI</div>
-            <div class="tagline">HVAC Revenue Recovery Systems</div>
-        </div>
-        
-        <!-- Hero Section -->
-        <!-- Hero Section -->
-        <div class="hero">
-            <h1>Is Your HVAC Business Leaking $10K/Month in Lost Jobs?</h1>
-            
-            <!-- ADD THIS BADGE -->
-            <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 15px 25px; margin: 25px auto; max-width: 500px; text-align: center;">
-                <p style="margin: 0; font-size: 16px; font-weight: 600; color: #856404;">
-                    🎯 Founding Client Offer: Only 5 Spots Available
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <strong>🎯 Founding Client Offer:</strong> First 5 spots get the $99 audit in exchange for an honest review — <strong>3 spots remaining</strong>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-brand">
+            <div class="nav-logo-mark">D</div>
+            <div>
+                <span class="nav-name">Dhinova AI</span>
+                <span class="nav-sub">HVAC Revenue Recovery</span>
+            </div>
+        </a>
+        <a href="https://calendly.com/dhinova-ai/new-meeting" class="nav-cta" target="_blank">Book a Call →</a>
+    </nav>
+
+    <!-- PAGE -->
+    <div class="page">
+
+        <!-- HERO -->
+        <div class="hero reveal">
+            <div class="founding-pill">
+                <span>⏳</span> Founding Client Offer — 5 Spots Only
+            </div>
+
+            <h1>Most HVAC Companies Lose <em>15–20%</em> of Revenue to 3 Fixable Gaps</h1>
+
+            <p class="hero-sub">
+                A focused audit of your inquiry-to-booking process — delivered in 3 days as a Loom video with screenshots, dollar estimates, and a clear fix recommendation.
+            </p>
+
+            <div class="hero-badges">
+                <div class="hero-badge">No obligation after audit</div>
+                <div class="hero-badge">3-day delivery guaranteed</div>
+                <div class="hero-badge">$99 credited toward installation</div>
+            </div>
+
+            <div style="margin-top: 8px; padding: 18px 24px; border-radius: 10px; background: var(--green-light); border: 1.5px solid #b5d9cc; display: inline-block; max-width: 560px;">
+                <p style="margin: 0; font-size: 18px; font-weight: 600; color: var(--green); line-height: 1.5;">
+                    If the audit doesn't surface at least one specific, actionable revenue leak in your business — you pay nothing.
                 </p>
-                <p style="margin: 8px 0 0 0; font-size: 14px; color: #856404;">
-                    First 5 HVAC companies get the $99 audit in exchange for an honest review after delivery
-                </p>
-            </div>
-            <!-- END BADGE -->
-            
-            <div class="trust-badges">
-                <span class="badge">✓ No Obligation</span>
-                <span class="badge">✓ 3-Day Delivery</span>
-                <span class="badge">✓ $99 Credited Toward Installation</span>
             </div>
         </div>
-        <!-- Solution Section -->
-        <div class="section">
-            <h2>The Solution</h2>
-            <p>I'll audit your inquiry-to-booking process and show you <strong>exactly</strong> where jobs are slipping through.</p>
-            
-            <h3>What You Get:</h3>
-            <ul>
-                <li>10-minute Loom video audit</li>
-                <li>Website gap analysis (with screenshots)</li>
-                <li>Google review analysis (customer complaints about "never called back")</li>
-                <li>Dollar loss estimate (conservative calculation)</li>
-                <li>System recommendation (which leak to fix first)</li>
-            </ul>
-            
-            <div class="highlight">
-                <p><strong>Your audit is yours to keep.</strong> No obligation to buy anything. Just pure insight into where your revenue is leaking.</p>
+
+        <!-- STATS (hidden — unhide when ready) -->
+        <div class="stat-row reveal" style="display:none;">
+            <div class="stat-cell">
+                <span class="stat-number">77+</span>
+                <span class="stat-label">HVAC companies<br>contacted & analyzed</span>
+            </div>
+            <div class="stat-cell">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Revenue leak patterns<br>found in every business</span>
+            </div>
+            <div class="stat-cell">
+                <span class="stat-number">$18K</span>
+                <span class="stat-label">Average annual leakage<br>identified per audit</span>
             </div>
         </div>
-        
-        <!-- How It Works -->
-        <div class="section">
-            <h2>How It Works</h2>
+
+        <!-- WHAT YOU GET -->
+        <div class="card reveal">
+            <div class="section-label">The Audit</div>
+            <div class="card-title">Here's exactly what's delivered</div>
+            <p>A systematic review of your public-facing inquiry and booking process — no CRM access required, no customer data needed.</p>
+
+            <div class="deliverables">
+                <div class="deliverable">
+                    <div class="deliverable-icon">🎥</div>
+                    <div class="deliverable-text">
+                        <strong>10-minute Loom video walkthrough</strong>
+                        <span>Screen-recorded audit of your full inquiry path, narrated with specific findings</span>
+                    </div>
+                </div>
+                <div class="deliverable">
+                    <div class="deliverable-icon">🖥️</div>
+                    <div class="deliverable-text">
+                        <strong>Website gap analysis with screenshots</strong>
+                        <span>Exact points where prospects drop off before converting to a booked job</span>
+                    </div>
+                </div>
+                <div class="deliverable">
+                    <div class="deliverable-icon">⭐</div>
+                    <div class="deliverable-text">
+                        <strong>Google review pattern analysis</strong>
+                        <span>Surfacing complaints like "never called back" or "took days to respond"</span>
+                    </div>
+                </div>
+                <div class="deliverable">
+                    <div class="deliverable-icon">💰</div>
+                    <div class="deliverable-text">
+                        <strong>Conservative dollar-loss estimate</strong>
+                        <span>Based on your ticket size and estimated lead volume — not inflated numbers</span>
+                    </div>
+                </div>
+                <div class="deliverable">
+                    <div class="deliverable-icon">🎯</div>
+                    <div class="deliverable-text">
+                        <strong>Fix recommendation (which leak to address first)</strong>
+                        <span>Prioritized by ROI — so you know exactly where to start</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                Your audit is yours to keep. Zero obligation to buy anything further — just clear insight into where revenue is slipping.
+            </div>
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <div class="card reveal">
+            <div class="section-label">Process</div>
+            <div class="card-title">How it works</div>
+
             <div class="steps">
                 <div class="step">
-                    <span class="step-number">1</span>
-                    <strong>Book a quick call</strong> OR pay $99 now (your choice)
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <strong>Book a call or pay $99 — your choice</strong>
+                        <span>Prefer to ask questions first? Book the free 15-min call. Ready to go? Pay and skip straight to step 2.</span>
+                    </div>
                 </div>
                 <div class="step">
-                    <span class="step-number">2</span>
-                    <strong>Fill out 2-minute intake form</strong> (I'll email it to you)
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <strong>Fill out a 2-minute intake form</strong>
+                        <span>Company name, website URL, and a few quick questions about your current lead flow.</span>
+                    </div>
                 </div>
                 <div class="step">
-                    <span class="step-number">3</span>
-                    <strong>Get your Loom audit in 3 days</strong> showing exactly where money is leaking
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <strong>Receive your Loom audit in 3 days</strong>
+                        <span>A recorded walkthrough showing exactly where jobs are leaking and the estimated cost.</span>
+                    </div>
                 </div>
                 <div class="step">
-                    <span class="step-number">4</span>
-                    <strong>Decide if you want to install the fix</strong> (Quote Follow-Up Autopilot system)
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <strong>Decide your next step</strong>
+                        <span>Keep the audit and DIY the fix. Or, have us install the Quote Follow-Up Autopilot system — $99 credited toward setup.</span>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Pricing -->
-        <div class="section">
-            <div class="price-box">
-                <div class="price-detail">Complete Audit</div>
-                <div class="price">$99</div>
-                <div class="price-detail">(Credited toward any system installation)</div>
-                <div class="timeline">⏰ Delivered in 3 Days Guaranteed</div>
+
+        <!-- VIDEO SECTION (hidden — unhide and swap in Loom embed when ready) -->
+        <div class="video-section reveal" style="display:none;">
+            <div class="video-card">
+                <div class="video-bg-pattern"></div>
+                <div class="video-inner">
+                    <div class="video-tag">Sample Audit</div>
+
+                    <div class="play-placeholder" id="playBtn" title="Video coming soon">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+
+                    <div class="video-title">"How I found $22K in annual leaks for a<br>5-tech HVAC company in Texas"</div>
+                    <div class="video-subtitle">A real audit walkthrough — same format you'll receive in 3 days</div>
+
+                    <div class="video-coming">
+                        <div class="video-coming-dot"></div>
+                        Video dropping soon — book a call to see the process live
+                    </div>
+                </div>
             </div>
-            
-            <!-- CTA Buttons -->
-            <div class="cta-container">
-                <a href="https://www.paypal.com/ncp/payment/VC4QTY6D2M544" class="btn btn-primary">
-                    Pay $99 Now — Get Audit in 3 Days
+        </div>
+
+        <!--
+        ═══════════════════════════════════════════════════
+        LOOM VIDEO SWAP INSTRUCTIONS:
+        When your Loom is ready, remove the entire .video-inner div above
+        and replace with:
+
+        <div class="loom-embed" style="position:relative;padding-bottom:56.25%;height:0;">
+          <iframe
+            src="https://www.loom.com/embed/YOUR_LOOM_ID"
+            frameborder="0"
+            webkitallowfullscreen mozallowfullscreen allowfullscreen
+            style="position:absolute;top:0;left:0;width:100%;height:100%;">
+          </iframe>
+        </div>
+        ═══════════════════════════════════════════════════
+        -->
+
+        <!-- PRICING -->
+        <div class="card reveal section-gap">
+            <div class="section-label">Investment</div>
+            <div class="card-title">Simple, flat pricing</div>
+
+            <div style="margin: 20px 0 0;">
+                <div class="delivery-tag">⏰ Delivered in 3 business days — guaranteed</div>
+            </div>
+
+            <div style="margin: 24px 0; border: 1.5px solid var(--border); border-radius: 12px; padding: 28px 24px; background: var(--white);">
+                <div class="pricing-label">Audit Only</div>
+                <div class="pricing-price">$99</div>
+                <div class="pricing-note">One-time, no commitment</div>
+                <ul class="pricing-items" style="margin-top: 16px;">
+                    <li>Full Loom video audit</li>
+                    <li>Website gap analysis</li>
+                    <li>Dollar loss estimate</li>
+                    <li>Fix recommendation</li>
+                </ul>
+            </div>
+
+            <div class="btn-group" style="margin-top: 8px;">
+                <a href="https://www.paypal.com/ncp/payment/VC4QTY6D2M544" class="btn btn-primary" target="_blank">
+                    Pay $99 — Get Audit in 3 Days
                 </a>
-                
-                <a href="https://calendly.com/dhinova-ai/new-meeting" class="btn btn-secondary">
-                    Book 15-Min Call First
-                    <span class="btn-text">Ask questions before paying</span>
+                <a href="https://calendly.com/dhinova-ai/new-meeting" class="btn btn-secondary" target="_blank">
+                    Book a Free 15-Min Call First
+                    <span class="btn-sub">Ask questions before paying</span>
                 </a>
             </div>
         </div>
-        
-        <!-- Who Am I -->
-        <div class="section">
-            <h2>Who Am I?</h2>
-            <p><strong>Santhosh Koramutla | Founder, Dhinova AI</strong></p>
-            <p>10+ years in data analytics & business automation. After analyzing 200+ service business pipelines, I consistently see the same 3 revenue leaks: missed calls, quotes with zero follow-up, and customers ghosting after initial contact.</p>
-            <p>I've helped HVAC companies across Florida, Texas, and Arizona identify $10K-50K in annual revenue leaks and install the automation to fix them.</p>
-            
-            <div style="margin: 25px 0; text-align: center;">
-                <a href="https://www.linkedin.com/in/ussk/" target="_blank" style="margin: 0 15px; text-decoration: none; color: #0077b5; font-weight: 600;">
-                    📎 LinkedIn
-                </a>
-                <a href="https://x.com/SKoramtla" target="_blank" style="margin: 0 15px; text-decoration: none; color: #1da1f2; font-weight: 600;">
-                    🐦 Twitter/X
-                </a>
-                <a href="mailto:dhoniva.ai@gmail.com" style="margin: 0 15px; text-decoration: none; color: #3498db; font-weight: 600;">
-                    ✉️ Email
-                </a>
+
+        <!-- WHO AM I -->
+        <div class="card reveal">
+            <div class="section-label">Founder</div>
+            <div class="founder-card">
+                <div class="founder-avatar">S</div>
+                <div style="flex: 1;">
+                    <div class="founder-name">Santhosh Koramutla</div>
+                    <div class="founder-role">Founder, Dhinova AI · Data Analytics & Automation</div>
+                    <p class="founder-bio">
+                        5+ years in data analytics and business automation. After analyzing pipelines across 77+ service businesses, the same 3 revenue leaks appear every time: missed calls, quotes with zero follow-up, and leads ghosting after first contact.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/ussk/" target="_blank" class="social-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://x.com/SKoramtla" target="_blank" class="social-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            Twitter/X
+                        </a>
+                        <a href="/cdn-cgi/l/email-protection#baded2d3d4d5ccdb94dbd3faddd7dbd3d694d9d5d7" class="social-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+                            Email
+                        </a>
+                    </div>
+                </div>
             </div>
-            
-            <p style="font-size: 14px; color: #7f8c8d; margin-top: 20px; text-align: center;">
-                Not hiding behind automation. Real person, real analysis, real results.
-            </p>
+
         </div>
-        
+
         <!-- FAQ -->
-        <div class="section">
-            <h2>Common Questions</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: What if I don't use ServiceTitan or Jobber?</div>
-                <div class="faq-answer">A: No problem. The audit works for any CRM, or even if you're using Excel and paper. I'm analyzing your public-facing systems (website, Google reviews, inquiry handling).</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: Do I have to buy a system after the audit?</div>
-                <div class="faq-answer">A: Nope. Zero obligation. The audit is yours to keep. If you want to install the Quote Follow-Up Autopilot system I recommend, great. If not, that's fine too.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: How do you access my data?</div>
-                <div class="faq-answer">A: I only analyze your public website and Google reviews. No database access needed. No customer data required. Just your website URL and answers to a few questions.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: What happens after I pay or book a call?</div>
-                <div class="faq-answer">A: You'll get an email with a quick intake form (takes 2 minutes). Once you fill it out, I'll start the audit. You'll have your Loom video within 3 days showing exactly where jobs are leaking and how much it's costing you.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">Q: Is the $99 really credited if I buy the system?</div>
-                <div class="faq-answer">A: Yes. 100%. If you decide to install the Quote Follow-Up Autopilot system ($1,200 setup + $250/month), your $99 audit fee comes off the setup price. So you'd pay $1,101 instead of $1,200.</div>
+        <div class="card reveal">
+            <div class="section-label">FAQ</div>
+            <div class="card-title">Common questions</div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        What if I don't use ServiceTitan or Jobber?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>No problem. The audit works regardless of your CRM — or even if you're on Excel and paper. I'm reviewing your public-facing systems: website, Google reviews, and inquiry handling. No internal database access needed.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        Do I have to buy anything after the audit?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>Zero obligation. The audit is yours to keep. If you want to install the Quote Follow-Up Autopilot system, great. If not, that's completely fine — the findings are still valuable on their own.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        How do you access my data?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>Only public information — your website and Google reviews. No login credentials, no customer data, no CRM access required. Just your website URL and a few short answers about your business.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        What happens after I pay or book?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>You'll get an email with a quick intake form (takes 2 minutes). Once you fill it out, the audit starts. You'll have your Loom video within 3 business days showing exactly where jobs are leaking and the dollar estimate.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        Is the $99 really credited toward the system?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>Yes, 100%. If you install the Quote Follow-Up Autopilot ($1,200 setup + $250/month), your $99 audit fee comes straight off the setup price — so you pay $1,101 instead of $1,200.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        I've never paid for an audit before. Why should I trust this?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>Fair question. The founding client offer exists precisely because of this — you're getting the audit at cost in exchange for an honest review after delivery. My analysis is based on public data you can verify yourself. If the findings don't hold up, you'd know immediately from the Loom.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">
+                        What if I want a refund?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">
+                        <p>Simple. If the audit didn't surface at least one specific, actionable revenue leak — you don't pay. Visit our <a href="refund.html" style="color: var(--steel); font-weight: 600;">refund page</a>, fill in your name and email, and submit. You'll get an instant confirmation and we'll process it to your PayPal within 24 hours. No back and forth, no questions asked.</p>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <!-- Final CTA -->
-        <div class="section">
-            <h2>Ready to See Where You're Leaking Revenue?</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Two ways to get started:</p>
-            
-            <div class="cta-container">
-                <a href="https://www.paypal.com/ncp/payment/VC4QTY6D2M544" class="btn btn-primary">
-                    Pay $99 Now — Get Audit in 3 Days
+
+        <!-- FINAL CTA -->
+        <div class="card reveal" style="background: var(--navy); border-color: var(--navy); text-align: center;">
+            <div style="color: rgba(255,255,255,0.55); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Get Started Today</div>
+            <div style="font-family: 'DM Serif Display', serif; font-size: 28px; color: white; margin-bottom: 10px; letter-spacing: -0.02em;">Ready to find your revenue leaks?</div>
+            <p style="color: rgba(255,255,255,0.55); font-size: 14.5px; margin-bottom: 28px;">Two ways in. Zero obligation after.</p>
+
+            <div class="btn-group" style="max-width: 380px; margin: 0 auto;">
+                <a href="https://www.paypal.com/ncp/payment/VC4QTY6D2M544" target="_blank"
+                   style="display:block; text-align:center; text-decoration:none; background:white; color:var(--navy); border-radius:8px; padding:15px 28px; font-size:15.5px; font-weight:600; transition: all 0.2s;">
+                    Pay $99 — Get Audit in 3 Days
                 </a>
-                
-                <a href="https://calendly.com/dhinova-ai/new-meeting" class="btn btn-secondary">
-                    Book 15-Min Call First
+                <a href="https://calendly.com/dhinova-ai/new-meeting" target="_blank"
+                   style="display:block; text-align:center; text-decoration:none; background:transparent; color:rgba(255,255,255,0.75); border:1.5px solid rgba(255,255,255,0.2); border-radius:8px; padding:14px 28px; font-size:14.5px; font-weight:500; margin-top:10px; transition: all 0.2s;">
+                    Book a Free 15-Min Call First
                 </a>
             </div>
         </div>
-        
-        <!-- Contact -->
-        <div class="footer">
-            <div class="contact">
-                <h3>Prefer Email?</h3>
-                <p>Send me a note: <a href="mailto:dhinova.ai@gmail.com" class="email-link">dhinova.ai@gmail.com</a></p>
-                <p style="font-size: 14px; color: #7f8c8d; margin-top: 15px;">Include your company name, website URL, and biggest lead leak. I'll reply within 24 hours.</p>
+
+        <!-- CONTACT -->
+        <div class="contact-section reveal">
+            <div>
+                <div class="contact-title">Prefer email?</div>
+                <p class="contact-desc">Send your company name, website URL, and your biggest lead leak concern. Response within 24 hours.</p>
             </div>
-            
-            <div class="footer-text">
-                © 2026 Dhinova AI. All rights reserved.
+            <div style="text-align: center;">
+                <a href="/cdn-cgi/l/email-protection#e08488898e8f9681ce8189a0878d81898cce838f8d" class="email-link" style="font-size: 17px;"><span class="__cf_email__" data-cfemail="baded2d3d4d5ccdb94dbd3faddd7dbd3d694d9d5d7">[email&#160;protected]</span></a>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Replies within 24 hours</p>
             </div>
         </div>
+
+        <div class="footer-copy">
+            © 2026 Dhinova AI. All rights reserved. &nbsp;·&nbsp;
+            <a href="refund.html" style="color: var(--text-muted); text-decoration: none; font-size: 15px; font-weight: 500;">Request a Refund</a>
+        </div>
+
     </div>
-</body>
-</html>
+
+    <script>
+        // FAQ accordion
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.closest('.faq-item');
+                const isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+
+        // Scroll reveal — add hidden first, then animate in
+        const revealEls = document.querySelectorAll('.reveal');
+        revealEls.forEach(el => el.classList.add('hidden'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('hidden');
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+        revealEls.forEach(el => observer.observe(el));
+
+        // Play button (only if visible)
+        const playBtn = document.getElementById('playBtn');
+        if (playBtn) {
+            playBtn.addEventListener('click', () => {
+                playBtn.style.background = 'rgba(255,255,255,0.25)';
+                setTimeout(() => playBtn.style.background = '', 300);
+            });
+        }
+
+        // Nav CTA hover fix for dark bg final CTA btns
+        document.querySelectorAll('[style*="background:white"]').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-1px)';
